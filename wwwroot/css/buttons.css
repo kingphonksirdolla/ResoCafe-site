@@ -1,0 +1,30 @@
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 22px;
+    border-radius: var(--radius-pill);
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background var(--transition), color var(--transition), transform var(--transition);
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--white);
+    color: var(--white);
+}
+
+.btn-outline:hover { background: rgba(255,255,255,0.08); }
+
+.btn-gold {
+    background: var(--gold);
+    color: var(--black);
+    font-weight: 700;
+}
+
+.btn-gold:hover { background: var(--gold-light); }

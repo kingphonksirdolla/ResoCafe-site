@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — RESO</title>
+
+    <link rel="stylesheet" href="~/css/root.css" />
+    <link rel="stylesheet" href="~/css/layout.css" />
+    <link rel="stylesheet" href="~/css/buttons.css" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-logo" href="/">RESO</a>
+
+    <ul class="navbar-links">
+        <li>
+            <a href="/" class="@(ViewData["Page"]?.ToString() == "home" ? "active" : "")">Главная</a>
+        </li>
+        <li>
+            <a href="/Home/Catalog" class="@(ViewData["Page"]?.ToString() == "catalog" ? "active" : "")">Каталог</a>
+        </li>
+        <li>
+            <a href="/Home/Cart" class="@(ViewData["Page"]?.ToString() == "cart" ? "active" : "")">
+                Корзина(<span id="nav-cart-count">0</span>)
+            </a>
+        </li>
+        <li>
+            <a href="/Home/Checkout" class="@(ViewData["Page"]?.ToString() == "checkout" ? "active" : "")">Оформление</a>
+        </li>
+    </ul>
+
+    <div class="navbar-actions">
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            if (User.IsInRole("admin"))
+            {
+                <a href="/Admin" class="navbar-auth @(ViewData["Page"]?.ToString() == "admin" ? "active" : "")">
+                    Панель администратора
+                </a>
+            }
+            <a href="/Profile" class="navbar-auth @(ViewData["Page"]?.ToString() == "profile" ? "active" : "")">
+                @User.Identity.Name
+            </a>
+            <a href="/Account/Logout" class="navbar-auth">Выйти</a>
+        }
+        else
+        {
+            <a href="/Account/Auth" class="navbar-auth @(ViewData["Page"]?.ToString() == "auth" ? "active" : "")">
+                Вход/Регистрация
+            </a>
+        }
+        <a href="/Home/Cart" class="cart-icon">
+            <img src="~/assets/icons/shopping-bag.svg" alt="Корзина" />
+            <span class="cart-badge" id="nav-cart-badge">0</span>
+        </a>
+    </div>
+</nav>
+
+<hr class="navbar-divider" />
+
+<div class="page-wrapper">
+    @RenderBody()
+</div>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <p>RESO</p>
+            <span>Уютная кофейня в центре города</span>
+        </div>
+        <nav class="footer-nav">
+            <a href="/">Главная</a>
+            <a href="/Home/Catalog">Каталог</a>
+            <a href="/Home/Cart">Корзина</a>
+            <a href="/Home/Checkout">Оформление</a>
+        </nav>
+        <div class="footer-contacts">
+            <span>ул. Центральная, 12</span>
+            <span>Пн–Вс: 08:00 – 22:00</span>
+            <a href="tel:+79001234567">+7 (900) 123-45-67</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © @DateTime.Now.Year RESO. Все права защищены.
+    </div>
+</footer>
+
+<script src="~/js/site.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

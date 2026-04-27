@@ -1,0 +1,30 @@
+.checkout-page { display: flex; justify-content: center; padding: 48px 20px; }
+
+.checkout-card {
+    background: var(--dark-card);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    width: 100%;
+    max-width: 520px;
+}
+
+.checkout-card h1 { font-size: 28px; font-weight: 400; margin-bottom: 28px; text-align: center; }
+.checkout-fields { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+.checkout-field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+
+.checkout-input {
+    background: var(--dark-input);
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    color: var(--white);
+    font-family: inherit;
+    font-size: 14px;
+    padding: 13px 20px;
+    outline: none;
+    width: 100%;
+    transition: border-color var(--transition);
+}
+
+.checkout-input::placeholder { color: var(--text-muted); }
+.checkout-input:focus { border-color: var(--gold); }
+.checkout-sum { font-size: 18px; margin-bottom: 16px; }

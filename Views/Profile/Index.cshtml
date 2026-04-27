@@ -1,0 +1,147 @@
+@using ResoCafe.Models
+@using ResoCafe.ViewModels
+@model ProfileViewModel
+@{
+    ViewData["Title"] = "Профиль";
+    ViewData["Page"] = "profile";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" />
+}
+
+<div class="profile-page">
+    <div class="profile-card">
+
+        <div class="profile-avatar-block">
+            <div class="profile-avatar">
+                @if (!string.IsNullOrEmpty(Model.AvatarPath))
+                {
+                    <img src="@Model.AvatarPath" alt="Аватарка" />
+                }
+                else
+                {
+                    <div class="profile-avatar-placeholder">
+                        <img src="~/assets/icons/user.svg" alt="" />
+                    </div>
+                }
+            </div>
+
+            <form method="post" asp-controller="Profile" asp-action="UploadAvatar"
+                  enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <label class="btn btn-outline avatar-upload-btn">
+                    Изменить фото
+                    <input type="file" name="avatar" accept=".jpg,.jpeg,.png,.webp"
+                           onchange="this.form.submit()" style="display:none" />
+                </label>
+            </form>
+
+            <p class="profile-username">@Model.Username</p>
+        </div>
+
+        <hr class="profile-divider" />
+
+        @if (TempData["Success"] != null)
+        {
+            <p class="profile-notice profile-notice--ok">@TempData["Success"]</p>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <p class="profile-notice profile-notice--err">@TempData["Error"]</p>
+        }
+
+        <form method="post" asp-controller="Profile" asp-action="UpdateInfo" class="profile-form">
+            @Html.AntiForgeryToken()
+
+            <div class="profile-field">
+                <label>Имя пользователя</label>
+                <input type="text" name="NewUsername" class="profile-input" value="@Model.Username" />
+            </div>
+            <div class="profile-field">
+                <label>Почта</label>
+                <input type="email" name="NewEmail" class="profile-input"
+                       placeholder="@(Model.Email ?? "Не привязана")" value="@Model.Email" />
+            </div>
+            <div class="profile-field">
+                <label>Телефон</label>
+                <input type="tel" name="NewPhone" class="profile-input"
+                       placeholder="@(Model.Phone ?? "Не указан")" value="@Model.Phone" />
+            </div>
+
+            <button type="submit" class="btn btn-gold profile-save-btn">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+@if (Model.Orders.Any() || Model.Bookings.Any())
+{
+    <div class="profile-history">
+
+        @if (Model.Orders.Any())
+        {
+            <div class="history-section">
+                <h2 class="history-title">История заказов</h2>
+                @foreach (var order in Model.Orders)
+                {
+                    <div class="history-card">
+                        <div class="history-card-header">
+                            <span class="history-card-date">@order.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                            <span class="order-status order-status--@order.Status.ToString().ToLower()">
+                                @(order.Status switch {
+                                    OrderStatus.New        => "Новый",
+                                    OrderStatus.InProgress => "Готовится",
+                                    OrderStatus.Delivered  => "Доставлен",
+                                    OrderStatus.Cancelled  => "Отменён",
+                                    _ => ""
+                                })
+                            </span>
+                        </div>
+                        <div class="history-card-items">
+                            @foreach (var item in order.Items)
+                            {
+                                <span>@item.MenuItem.Name × @item.Quantity</span>
+                            }
+                        </div>
+                        <div class="history-card-footer">
+                            <span>@order.Address</span>
+                            <span class="history-card-total">@order.Total ₽</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        @if (Model.Bookings.Any())
+        {
+            <div class="history-section">
+                <h2 class="history-title">История бронирований</h2>
+                @foreach (var booking in Model.Bookings)
+                {
+                    <div class="history-card">
+                        <div class="history-card-header">
+                            <span class="history-card-date">@booking.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                            <span class="booking-status booking-status--@booking.Status.ToString().ToLower()">
+                                @(booking.Status switch
+                                {
+                                    BookingStatus.Pending => "Ожидает",
+                                    BookingStatus.Confirmed => "Подтверждено",
+                                    BookingStatus.Cancelled => "Отменено",
+                                    _ => ""
+                                })
+                            </span>
+                        </div>
+                        <div class="history-card-items">
+                            <span>@booking.FirstName @booking.LastName</span>
+                            @if (!string.IsNullOrEmpty(booking.Phone))
+                            {
+                                <span>@booking.Phone</span>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+}

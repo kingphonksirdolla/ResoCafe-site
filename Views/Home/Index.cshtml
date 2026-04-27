@@ -1,0 +1,87 @@
+@{
+    ViewData["Title"] = "Главная";
+    ViewData["Page"] = "home";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/index.css" />
+}
+
+<section class="hero">
+    <div class="hero-text">
+        <h1>
+            Сделай перерыв и выпей
+            <span>КОФЕ</span>
+        </h1>
+        <p>В уютной кофейне в центре города в компании друзей, деловых партнёров и единомышленников</p>
+        <a href="/Home/Catalog" class="btn btn-outline">Подробнее</a>
+    </div>
+    <img class="hero-img" src="~/assets/img/hero-coffee.jpg" alt="Чашка кофе" />
+</section>
+
+<hr class="navbar-divider" />
+
+<section class="about">
+    <div class="about-text">
+        <h2>О нас</h2>
+        <h3>Самое время для чашки кофе</h3>
+        <p>
+            Добро пожаловать в нашу уютную кофейню! Это отличное место, где можно провести время
+            за чашечкой кофе, с хорошей музыкой и потрясающей атмосферой. Здесь вы можете
+            отдохнуть с друзьями, поработать или побыть наедине с чудесным ароматом кофе.
+            Мы будем рады встречаться с вами каждый день. Найдёте невероятные приятные моменты
+            в нашей кофейне! Найдите неповторимый опыт и почувствуйте себя в этом прекрасном месте!
+        </p>
+        <a href="#booking" class="btn btn-outline">Отправить заявку</a>
+    </div>
+    <img class="about-img" src="~/assets/img/about-coffee.jpg" alt="Атмосфера кофейни" />
+</section>
+
+<hr class="navbar-divider" />
+
+<section class="booking" id="booking">
+    <h2>Забронировать столик</h2>
+
+    @if (TempData["BookingSuccess"] != null)
+    {
+        <p class="booking-notice booking-notice--ok">@TempData["BookingSuccess"]</p>
+    }
+    @if (TempData["BookingError"] != null)
+    {
+        <p class="booking-notice booking-notice--err">@TempData["BookingError"]</p>
+    }
+
+    <form class="booking-form" method="post" asp-controller="Home" asp-action="Booking">
+        @Html.AntiForgeryToken()
+        <div class="booking-row">
+            <input type="text" name="FirstName" class="booking-input" placeholder="Имя" required />
+            <input type="text" name="LastName" class="booking-input" placeholder="Фамилия" required />
+        </div>
+        <div class="booking-row">
+            <input type="tel" name="Phone" class="booking-input" placeholder="Телефон" required />
+        </div>
+        <button type="submit" class="btn btn-gold">Отправить заявку</button>
+    </form>
+</section>
+
+<div class="features">
+    <div class="feature-item">
+        <img src="~/assets/icons/coffee.svg" class="feature-icon" alt="" />
+        <h4>Лучшие сорта кофе</h4>
+        <p>Выбери любимый вкус</p>
+    </div>
+    <div class="feature-item">
+        <img src="~/assets/icons/wifi-high.svg" class="feature-icon" alt="" />
+        <h4>Бесплатный быстрый Wi-Fi</h4>
+        <p>Для работы и встреч</p>
+    </div>
+    <div class="feature-item">
+        <img src="~/assets/icons/cake.svg" class="feature-icon" alt="" />
+        <h4>Вкусные десерты</h4>
+        <p>Не останешься голодным</p>
+    </div>
+    <div class="feature-item feature-item--text">
+        <span class="feature-takeaway-title">КОФЕ С СОБОЙ</span>
+        <span class="feature-takeaway-sub">Пей где угодно</span>
+    </div>
+</div>

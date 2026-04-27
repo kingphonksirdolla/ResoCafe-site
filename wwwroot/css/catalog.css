@@ -1,0 +1,98 @@
+.catalog-page { max-width: 1200px; margin: 0 auto; padding: 48px; }
+
+.catalog-page h1 {
+    font-size: 36px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 36px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.menu-card {
+    background: var(--dark-card);
+    border-radius: var(--radius-md);
+    padding: 20px 52px 20px 18px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: background var(--transition);
+    min-height: 130px;
+}
+
+.menu-card:hover { background: #222; }
+
+.menu-card-category {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.menu-card-name { font-size: 16px; font-weight: 400; }
+.menu-card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.menu-card-price { font-size: 16px; color: var(--gold); margin-top: 8px; }
+
+.menu-card-add {
+    position: absolute;
+    right: 14px;
+    bottom: 18px;
+    width: 30px;
+    height: 30px;
+    background: var(--dark-input);
+    border: none;
+    border-radius: 50%;
+    color: var(--white);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: background var(--transition), color var(--transition);
+}
+
+.menu-card-add:hover { background: var(--gold); color: var(--black); }
+
+/* корзина */
+.cart-page { max-width: 900px; margin: 0 auto; padding: 48px; }
+.cart-page h1 { font-size: 32px; font-weight: 400; margin-bottom: 28px; }
+
+.cart-item {
+    background: var(--dark-card);
+    border-radius: var(--radius-lg);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.cart-item-name { font-size: 15px; }
+.cart-item-right { display: flex; align-items: center; gap: 16px; }
+.cart-item-price { font-size: 15px; }
+
+.cart-item-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    opacity: 0.7;
+    transition: opacity var(--transition);
+}
+
+.cart-item-remove:hover { opacity: 1; }
+
+.cart-total { text-align: right; font-size: 18px; color: var(--gold); margin: 20px 0 28px; }
+
+.cart-icon {
+    filter: invert(30%) sepia(80%) saturate(600%) hue-rotate(330deg);
+}

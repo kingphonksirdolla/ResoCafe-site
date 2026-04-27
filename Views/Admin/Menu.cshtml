@@ -1,0 +1,111 @@
+@using ResoCafe.Models
+@model List<MenuItem>
+@{
+    ViewData["Title"] = "Меню — Администратор";
+    ViewData["Page"] = "admin";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" />
+}
+
+<div class="admin-page">
+    <div class="admin-header">
+        <h1>Управление меню</h1>
+        <a href="/Admin" class="btn btn-outline">← Бронирования</a>
+    </div>
+
+    <div class="admin-add-form">
+        <h2 class="admin-section-title">Добавить позицию</h2>
+        <form method="post" asp-action="AddMenuItem" class="admin-form">
+            @Html.AntiForgeryToken()
+            <input type="text" name="Category" class="admin-input" placeholder="Категория" required />
+            <input type="text" name="Name" class="admin-input" placeholder="Название" required />
+            <input type="text" name="Description" class="admin-input" placeholder="Описание" />
+            <input type="number" name="Price" class="admin-input" placeholder="Цена" step="0.01" min="0" required />
+            <button type="submit" class="btn btn-gold">Добавить</button>
+        </form>
+    </div>
+
+    <h2 class="admin-section-title">Все позиции</h2>
+
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Категория</th>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Цена</th>
+                    <th>Доступно</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Category</td>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@item.Price ₽</td>
+                        <td>@(item.IsAvailable ? "Да" : "Нет")</td>
+                        <td class="admin-actions">
+                            <button class="btn-admin btn-admin--edit"
+                                    onclick="openEdit(@item.Id, '@item.Category', '@item.Name', '@item.Description', @item.Price, @item.IsAvailable.ToString().ToLower())">
+                                Изменить
+                            </button>
+                            <form method="post" asp-action="DeleteMenuItem" asp-route-id="@item.Id" style="display:inline"
+                                  onsubmit="return confirm('Удалить «@item.Name»?')">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn-admin btn-admin--cancel">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="admin-modal" id="editModal" style="display:none">
+    <div class="admin-modal-inner">
+        <h3 style="margin-bottom:20px">Редактировать позицию</h3>
+        <form method="post" asp-action="EditMenuItem" class="admin-form">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Id" id="edit-id" />
+            <input type="text" name="Category" id="edit-category" class="admin-input" placeholder="Категория" required />
+            <input type="text" name="Name" id="edit-name" class="admin-input" placeholder="Название" required />
+            <input type="text" name="Description" id="edit-desc" class="admin-input" placeholder="Описание" />
+            <input type="number" name="Price" id="edit-price" class="admin-input" placeholder="Цена" step="0.01" min="0" required />
+            <label class="admin-checkbox">
+                <input type="checkbox" name="IsAvailable" id="edit-available" value="true" />
+                Доступно
+            </label>
+            <div style="display:flex; gap:12px; margin-top:8px;">
+                <button type="submit" class="btn btn-gold" style="flex:1">Сохранить</button>
+                <button type="button" class="btn btn-outline" onclick="closeEdit()" style="flex:1">Отмена</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+function openEdit(id, category, name, desc, price, available) {
+    document.getElementById('edit-id').value = id;
+    document.getElementById('edit-category').value = category;
+    document.getElementById('edit-name').value = name;
+    document.getElementById('edit-desc').value = desc || '';
+    document.getElementById('edit-price').value = price;
+    document.getElementById('edit-available').checked = available;
+    document.getElementById('editModal').style.display = 'flex';
+}
+
+function closeEdit() {
+    document.getElementById('editModal').style.display = 'none';
+}
+</script>
+}

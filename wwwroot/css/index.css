@@ -1,0 +1,131 @@
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 52px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+}
+
+.hero-text h1 { font-size: 46px; line-height: 1.1; font-weight: 400; margin-bottom: 4px; }
+.hero-text h1 span { color: var(--gold); display: block; }
+
+.hero-text p {
+    font-size: 15px;
+    color: #ccc;
+    margin: 18px 0 28px;
+    max-width: 440px;
+    line-height: 1.6;
+}
+
+.hero-img {
+    width: 330;
+    height: 330px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* о нас */
+.about {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 52px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+}
+
+.about-text h2 { font-size: 32px; font-weight: 400; margin-bottom: 6px; }
+.about-text h3 { font-size: 20px; color: var(--gold); font-weight: 400; margin-bottom: 20px; }
+
+.about-text p {
+    font-size: 14px;
+    color: #ccc;
+    line-height: 1.7;
+    max-width: 500px;
+    margin-bottom: 28px;
+}
+
+.about-img {
+    width: 330px; 
+    height: 330px; 
+    border-radius: var(--radius-md); 
+    object-fit: cover; 
+    flex-shrink: 0;
+}
+
+/* бронь */
+.booking { border-top: 1px solid #2a2a2a; padding: 52px 48px; max-width: 1200px; margin: 0 auto; text-align: center; }
+.booking h2 { font-size: 32px; font-weight: 400; margin-bottom: 20px; }
+.booking-form { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.booking-row { display: flex; gap: 16px; }
+
+.booking-input {
+    background: var(--dark-card);
+    border: 1px solid #333;
+    border-radius: var(--radius-pill);
+    color: var(--white);
+    font-family: inherit;
+    font-size: 14px;
+    padding: 14px 24px;
+    width: 280px;
+    outline: none;
+    transition: border-color var(--transition);
+}
+
+.booking-input::placeholder { color: var(--text-muted); }
+.booking-input:focus { border-color: var(--gold); }
+
+.booking-input--wide {
+    width: 576px;
+}
+
+.booking-input[type="number"] {
+    appearance: textfield;
+}
+
+.booking-input[type="number"]::-webkit-outer-spin-button,
+.booking-input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.booking-input[type="datetime-local"] {
+    color-scheme: dark;
+}
+
+.booking-notice {
+    padding: 10px 20px;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.booking-notice--ok  { background: rgba(40,140,60,0.15); border: 1px solid rgba(40,140,60,0.4); color: #7ecf8e; }
+.booking-notice--err { background: rgba(180,40,40,0.15); border: 1px solid rgba(180,40,40,0.4); color: #f08080; }
+
+/* особенности */
+.features { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #2a2a2a; margin-top: 20px; }
+
+.feature-item {
+    padding: 36px 24px;
+    text-align: center;
+    border-right: 1px solid #2a2a2a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.feature-item:last-child { border-right: none; }
+
+.feature-icon { width: 40px; height: 40px; filter: invert(70%) sepia(60%) saturate(500%) hue-rotate(5deg); }
+
+.feature-item h4 { font-size: 13px; letter-spacing: 0.08em; font-weight: 400; text-transform: uppercase; }
+.feature-item p { font-size: 12px; color: var(--text-muted); }
+
+.feature-item--text { justify-content: center; }
+.feature-takeaway-title { font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; }
+.feature-takeaway-sub { font-size: 12px; color: var(--text-muted); }

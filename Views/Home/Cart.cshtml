@@ -1,0 +1,69 @@
+@{
+    ViewData["Title"] = "Корзина";
+    ViewData["Page"] = "cart";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/catalog.css" />
+}
+
+<div class="cart-page">
+    <h1>Корзина</h1>
+
+    <div id="cartItems"></div>
+
+    <p class="cart-empty" id="cartEmpty" style="display:none; color:var(--text-muted); font-size:15px;">
+        Корзина пуста. <a href="/Home/Catalog" style="color:var(--gold);">Перейти в каталог</a>
+    </p>
+
+    <div id="cartFooter" style="display:none;">
+        <p class="cart-total">Итого: <span id="cartTotal">0</span> ₽</p>
+        <a href="/Home/Checkout" class="btn btn-gold">Перейти к оформлению</a>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+function renderCart() {
+    const items = Cart.get();
+    const container = document.getElementById('cartItems');
+    const footer = document.getElementById('cartFooter');
+    const empty = document.getElementById('cartEmpty');
+
+    container.innerHTML = '';
+
+    if (items.length === 0) {
+        empty.style.display = 'block';
+        footer.style.display = 'none';
+        return;
+    }
+
+    empty.style.display = 'none';
+    footer.style.display = 'block';
+
+    items.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'cart-item';
+        row.innerHTML = `
+            <span class="cart-item-name">${item.name} x${item.qty}</span>
+            <div class="cart-item-right">
+                <span class="cart-item-price">${item.price * item.qty} ₽</span>
+                <button class="cart-item-remove" onclick="removeItem(${item.id})" title="Удалить">
+                    <img class="cart-icon" src="/assets/icons/trash.svg" width="18" height="18" alt="Удалить" />
+                </button>
+            </div>
+        `;
+        container.appendChild(row);
+    });
+
+    document.getElementById('cartTotal').textContent = Cart.total();
+}
+
+function removeItem(id) {
+    Cart.remove(id);
+    renderCart();
+}
+
+renderCart();
+</script>
+}

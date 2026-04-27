@@ -1,0 +1,52 @@
+@using ResoCafe.Models
+@model List<MenuItem>
+@{
+    ViewData["Title"] = "Каталог";
+    ViewData["Page"] = "catalog";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/catalog.css" />
+}
+
+<div class="catalog-page">
+    <h1>Самое вкусное в нашем меню</h1>
+
+    <div class="menu-grid">
+        @foreach (var item in Model)
+        {
+            <div class="menu-card" data-id="@item.Id" data-name="@item.Name" data-price="@item.Price">
+                <span class="menu-card-category">@item.Category</span>
+                <span class="menu-card-name">@item.Name</span>
+                @if (!string.IsNullOrEmpty(item.Description))
+                {
+                    <span class="menu-card-desc">@item.Description</span>
+                }
+                <span class="menu-card-price">@item.Price ₽</span>
+                <button class="menu-card-add"
+                        onclick="addToCart(@item.Id, '@item.Name', @item.Price)">+</button>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script>
+function addToCart(id, name, price) {
+    Cart.add(id, name, price);
+
+    const btn = document.querySelector(`.menu-card[data-id="${id}"] .menu-card-add`);
+    if (!btn) return;
+
+    btn.textContent = '✓';
+    btn.style.background = 'var(--gold)';
+    btn.style.color = 'var(--black)';
+
+    setTimeout(() => {
+        btn.textContent = '+';
+        btn.style.background = '';
+        btn.style.color = '';
+    }, 900);
+}
+</script>
+}

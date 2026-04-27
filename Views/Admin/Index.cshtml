@@ -1,0 +1,76 @@
+@using ResoCafe.Models
+@model List<Booking>
+@{
+    ViewData["Title"] = "Панель администратора";
+    ViewData["Page"] = "admin";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" />
+}
+
+<div class="admin-page">
+    <div class="admin-header">
+        <h1>Панель управления</h1>
+        <a href="/Admin/Menu" class="btn btn-outline">Редактировать меню</a>
+    </div>
+
+    <h2 class="admin-section-title">Бронирования</h2>
+
+    @if (!Model.Any())
+    {
+        <p style="color:var(--text-muted);">Заявок пока нет</p>
+    }
+    else
+    {
+        <div class="admin-table-wrap">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Имя</th>
+                        <th>Телефон</th>
+                        <th>Статус</th>
+                        <th>Дата заявки</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var b in Model)
+                    {
+                        <tr>
+                            <td>@b.Id</td>
+                            <td>@b.FirstName @b.LastName</td>
+                            <td>@(b.Phone ?? "—")</td>
+                            <td>
+                                <span class="booking-status booking-status--@b.Status.ToString().ToLower()">
+                                    @(b.Status switch
+                                    {
+                                        BookingStatus.Pending => "Ожидает",
+                                        BookingStatus.Confirmed => "Подтверждено",
+                                        BookingStatus.Cancelled => "Отменено",
+                                        _ => ""
+                                    })
+                                </span>
+                            </td>
+                            <td>@b.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                            <td class="admin-actions">
+                                @if (b.Status == BookingStatus.Pending)
+                                {
+                                    <form method="post" asp-action="ConfirmBooking" asp-route-id="@b.Id" style="display:inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn-admin btn-admin--confirm">Подтвердить</button>
+                                    </form>
+                                    <form method="post" asp-action="CancelBooking" asp-route-id="@b.Id" style="display:inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn-admin btn-admin--cancel">Отменить</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Jacques+Francois&display=swap');
+
+:root {
+    --black:        #000000;
+    --black-soft:   #0d0d0d;
+    --dark:         #111111;
+    --dark-card:    #1a1a1a;
+    --dark-input:   #222222;
+    --gold:         #c49a1a;
+    --gold-light:   #d4aa3a;
+    --white:        #ffffff;
+    --text-muted:   #888888;
+
+    --radius-sm:    8px;
+    --radius-md:    16px;
+    --radius-lg:    24px;
+    --radius-pill:  999px;
+
+    --transition:   0.2s ease;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Jacques Francois', Georgia, serif;
+    background-color: var(--black-soft);
+    color: var(--white);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, input {
+    font-family: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}

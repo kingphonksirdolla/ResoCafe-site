@@ -1,0 +1,128 @@
+.admin-page { max-width: 1100px; margin: 0 auto; padding: 48px; }
+
+.admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; }
+.admin-header h1 { font-size: 30px; font-weight: 400; }
+
+.admin-section-title { font-size: 18px; font-weight: 400; margin-bottom: 16px; color: var(--gold); }
+
+.admin-table-wrap { overflow-x: auto; }
+
+.admin-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+
+.admin-table th {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid #2a2a2a;
+    color: var(--text-muted);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.admin-table tr {
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.admin-table td {
+    padding: 12px 14px;
+    vertical-align: middle;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.booking-status { padding: 3px 10px; border-radius: var(--radius-pill); font-size: 12px; }
+.booking-status--pending   { background: rgba(180,140,0,0.2); color: var(--gold-light); }
+.booking-status--confirmed { background: rgba(40,140,60,0.2); color: #7ecf8e; }
+.booking-status--cancelled { background: rgba(180,40,40,0.2); color: #f08080; }
+
+.admin-actions { display: flex; gap: 8px; align-items: center; }
+
+.btn-admin {
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    border: none;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: opacity var(--transition);
+}
+
+.btn-admin:hover { opacity: 0.8; }
+.btn-admin--confirm { background: rgba(40,140,60,0.25); color: #7ecf8e; }
+.btn-admin--cancel  { background: rgba(180,40,40,0.2); color: #f08080; }
+.btn-admin--edit    { background: rgba(180,140,0,0.2); color: var(--gold-light); }
+
+.admin-add-form { margin-bottom: 40px; }
+
+.admin-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+
+.admin-input {
+    background: var(--dark-input);
+    border: 1px solid #333;
+    border-radius: var(--radius-pill);
+    color: var(--white);
+    font-family: inherit;
+    font-size: 14px;
+    padding: 11px 18px;
+    outline: none;
+    min-width: 160px;
+    transition: border-color var(--transition);
+    appearance: textfield;
+}
+
+.admin-input::-webkit-outer-spin-button,
+.admin-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+}
+
+.admin-input::placeholder { color: var(--text-muted); }
+.admin-input:focus { border-color: var(--gold); }
+
+.admin-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.admin-modal-inner {
+    background: var(--dark-card);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    width: 100%;
+    max-width: 440px;
+}
+
+.admin-modal-inner .admin-form { flex-direction: column; }
+.admin-modal-inner .admin-input { width: 100%; min-width: unset; }
+
+admin-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-muted);
+    user-select: none;
+}
+
+.admin-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.admin-checkbox-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: var(--dark-input);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition), border-color var(--transition);
+    flex-shrink: 0;
+}

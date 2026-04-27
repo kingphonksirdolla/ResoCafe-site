@@ -1,0 +1,82 @@
+@{
+    ViewData["Title"] = "Оформление";
+    ViewData["Page"] = "checkout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/checkout.css" />
+}
+
+<div class="checkout-page">
+    <div class="checkout-card">
+        <h1>Оформление доставки</h1>
+
+        <form id="checkoutForm">
+            <div class="checkout-fields">
+                <div class="checkout-field">
+                    <label>Имя</label>
+                    <input type="text" id="customerName" class="checkout-input" placeholder="Имя" required />
+                </div>
+                <div class="checkout-field">
+                    <label>Телефон</label>
+                    <input type="tel" id="customerPhone" class="checkout-input" placeholder="+7..." required />
+                </div>
+                <div class="checkout-field">
+                    <label>Адрес</label>
+                    <input type="text" id="customerAddress" class="checkout-input" placeholder="Улица, дом" required />
+                </div>
+            </div>
+
+            <p class="checkout-sum">Сумма: <span id="checkoutTotal">0</span> ₽</p>
+
+            <button type="submit" class="btn btn-gold" style="width:100%; padding:14px; font-size:15px;">
+                Подтвердить заказ
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+document.getElementById('checkoutTotal').textContent = Cart.total();
+
+document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const items = Cart.get();
+    if (items.length === 0) {
+        alert('Корзина пуста');
+        return;
+    }
+
+    const payload = {
+        customerName: document.getElementById('customerName').value,
+        phone: document.getElementById('customerPhone').value,
+        address: document.getElementById('customerAddress').value,
+        items: items.map(i => ({ menuItemId: i.id, quantity: i.qty }))
+    };
+
+    const btn = this.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Отправка...';
+
+    try {
+        const res = await fetch('/Home/PlaceOrder', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error();
+
+        Cart.save([]);
+        alert('Заказ оформлен! Спасибо за покупку.');
+        window.location.href = '/';
+    } catch {
+        alert('Что-то пошло не так. Попробуйте ещё раз.');
+        btn.disabled = false;
+        btn.textContent = 'Подтвердить заказ';
+    }
+});
+</script>
+}
