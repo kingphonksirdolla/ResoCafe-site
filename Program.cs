@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ResoCafe.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//comment for the test
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
